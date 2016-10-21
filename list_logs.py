@@ -1,18 +1,21 @@
 import requests
 import json
 import time
+import sys
 
-ACCOUNT_KEY = "ACCOUNT_KEY"
+ACCOUNT_KEY = sys.argv[1]
 
 def handle_response(resp):
     hosts = []
+    host_key = {}
     response = resp
     time.sleep(1)
     if response.status_code == 200:
         account_info = eval(resp.text)
         for i in account_info['list']:
             hosts.append(i['name'])
-        return hosts
+            host_key[i['name']] = i['key']
+        return hosts, host_key
     if response.status_code == 202:
         continue_request(resp)
         return
@@ -33,7 +36,7 @@ def make_request(provided_url=None, hosts=None):
 def print_query():
     logs = {}
     req = make_request()
-    hosts = handle_response(req)
+    hosts, host_key = handle_response(req)
     for host in hosts:
         logs[host] = {}
     for host in hosts:
@@ -43,6 +46,7 @@ def print_query():
         for log in data['list']:
             logs[host][log['name']] = log['key']
     print json.dumps(logs, sort_keys=True, indent=4, separators=(',', ': '))
+    print json.dumps(host_key, sort_keys=True, indent=4, separators=(',', ': '))
 
 def start():
     print_query()
