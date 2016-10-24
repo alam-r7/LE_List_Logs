@@ -45,11 +45,13 @@ def print_query():
         data = eval(req2.text)
         for log in data['list']:
             logs[host][log['name']] = log['key']
+    print "Log Keys:"
     print json.dumps(logs, sort_keys=True, indent=4, separators=(',', ': '))
+    print "Log Set Keys:"
     print json.dumps(host_key, sort_keys=True, indent=4, separators=(',', ': '))
 
 def start():
     print_query()
 
 if __name__ == '__main__':
-    start()
+    start() 
