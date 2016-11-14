@@ -4,6 +4,7 @@ You need to have your account key and run the script with `python list_logs.py A
 
 Example Response:
 
+```
 Log Keys: 
 {
 	"Log Set A": {
@@ -21,3 +22,4 @@ Log Set Keys:
 	"Log Set A": "LOG_SET_KEY_A"
 	"Log Set B": "LOG_SET_KEY_B"
 }
+```
